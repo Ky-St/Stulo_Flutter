@@ -278,10 +278,6 @@ Widget underAppBar_Third_Screen(BuildContext context) {
   );
 }
 Widget card_of_events(){
-  bool ishsow = true;
-  void remove_card(index){
-      events.removeAt(index - 1);
-  }
   return Container(
     child: ListView.builder(
         itemCount: events.length,
@@ -315,7 +311,6 @@ Widget card_of_events(){
                           color: mainColor,
                         ),
                         onPressed: () {
-                          remove_card(_);
                         }),
                   ),
                 ],
