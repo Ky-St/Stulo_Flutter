@@ -1,4 +1,4 @@
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Event.dart';
@@ -125,17 +125,6 @@ Widget buttons(BuildContext context) {
     ),
   );
 }
-Widget snackbar(BuildContext context){
-  return Scaffold(
-    body: Builder(
-      builder: (context) => RaisedButton(onPressed: (){
-        Scaffold.of(context).showSnackBar(SnackBar(content: Text("Füllen Sie bitte alle Felder aus!!!")));
-      }
-    ),
-    ),
-  );
-}
-
 Widget underAppBar_Second_Screen(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
@@ -164,10 +153,23 @@ Widget put_in_buttons(BuildContext context){
   final number_hours_inputcontroller = TextEditingController();
   final salary_hours_inputcontroller = TextEditingController();
 
-  calculate() {
+  void showToast() {
+    Fluttertoast.showToast(
+        msg: "Füllen Sie bitte die Felder aus!",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: Colors.white,
+        textColor: Colors.green,
+        fontSize: 20
+
+    );
+  }
+
+  calculate(BuildContext context) {
     String number_hours = number_hours_inputcontroller.text;
     String salary_hours = salary_hours_inputcontroller.text;
     String name_employer = name_employer_inputcontroller.text;
+
     if (name_employer != "" && number_hours != "" && salary_hours != "") {
       double number_hours_double = double.parse(number_hours);
       double salary_hours_double = double.parse(salary_hours);
@@ -178,8 +180,10 @@ Widget put_in_buttons(BuildContext context){
       events.add(Event(name_employer, number_hours_double, salary_hours_double, result));
       print(events[0].name_employer);
       print(events.length);
+      return Navigator.pushNamed(context, "/fourth");
     }
     else {
+      showToast();
       print("Keine Eingabe");
     }
   }
@@ -257,9 +261,9 @@ Widget put_in_buttons(BuildContext context){
                   color: mainColor,
                 ),
                 onPressed: () {
-                  calculate();
-                  Navigator.pushNamed(context, '/fourth');
-                }),
+                  calculate(context);
+                }
+                ),
           ],
         ),
       ),
