@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Event.dart';
@@ -110,7 +111,8 @@ Widget buttons(BuildContext context) {
                           size: 100,
                           color: mainColor,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                        },
                       ),
                     ),
                   ),
@@ -120,6 +122,16 @@ Widget buttons(BuildContext context) {
           ])),
         ],
       ),
+    ),
+  );
+}
+Widget snackbar(BuildContext context){
+  return Scaffold(
+    body: Builder(
+      builder: (context) => RaisedButton(onPressed: (){
+        Scaffold.of(context).showSnackBar(SnackBar(content: Text("Füllen Sie bitte alle Felder aus!!!")));
+      }
+    ),
     ),
   );
 }
