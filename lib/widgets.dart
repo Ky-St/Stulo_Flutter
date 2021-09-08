@@ -125,7 +125,7 @@ Widget buttons(BuildContext context) {
     ),
   );
 }
-Widget underAppBar_Second_Screen(BuildContext context) {
+Widget underAppBar(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
@@ -141,7 +141,7 @@ Widget underAppBar_Second_Screen(BuildContext context) {
                 color: Colors.greenAccent,
               ),
               onPressed: () {
-                Navigator.pop(context, '/first');
+                Navigator.pop(context);
               }),
         ],
       ),
@@ -270,69 +270,56 @@ Widget put_in_buttons(BuildContext context){
     ),
   );
 }
-Widget underAppBar_Third_Screen(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: mainColor, width: 1)
-      ),
-      child: Row(
-        children: [
-          IconButton(
-              icon: Icon(
-                Icons.arrow_back_outlined,
-                color: mainColor,
-              ),
-              onPressed: () {
-                Navigator.pop(context, '/second');
-              }),
-        ],
-      ),
-    ),
-  );
-}
-Widget card_of_events(){
+Widget card_of_events(BuildContext context){
+  final GlobalKey<AnimatedListState> key_ = GlobalKey();
+  
+  void remove_of_card(index){
+    final item = events.removeAt(index);
+    print(events.length);
+  }
   return Container(
     child: ListView.builder(
         itemCount: events.length,
         padding: EdgeInsets.all(5.0),
         itemBuilder: (_, index) => Card(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(color: mainColor, width: 2),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text("Name: ${events[index].name_employer}\nStunden: ${events[index].number_hours}\nGehalt: ${events[index].salary_hours}\n" "Verdient: ${events[index].result}",
-            style: TextStyle(fontSize: 20.0),),
+          key: key_,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: mainColor, width: 2),
+                borderRadius: BorderRadius.circular(10.0),
               ),
-              Row(
+              child: Column(
                 children: [
-                  IconButton(
-                      icon: Icon(
-                        Icons.border_color,
-                        color: mainColor,
-                      ),
-                      onPressed: () {
-                      }),
                   Padding(
-                    padding: const EdgeInsets.only(left: 297.0),
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.remove_circle_outlined,
-                          color: mainColor,
-                        ),
-                        onPressed: () {
-                        }),
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      "Name: ${events[index].name_employer}\nStunden: ${events[index].number_hours}\nGehalt: ${events[index].salary_hours}\n"
+                      "Verdient: ${events[index].result}",
+                      style: TextStyle(fontSize: 20.0),
+                    ),
                   ),
+                  Row(
+                    children: [
+                      IconButton(
+                          icon: Icon(
+                            Icons.border_color,
+                            color: mainColor,
+                          ),
+                          onPressed: () {}),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 297.0),
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.remove_circle_outlined,
+                              color: mainColor,
+                            ),
+                            onPressed: () {
+                              remove_of_card(index);
+                            }),
+                      ),
+                    ],
+                  )
                 ],
-              )
-            ],
-          ),
-        )),
+              ),
+            )),
   );
 }

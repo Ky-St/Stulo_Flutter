@@ -14,7 +14,7 @@ class _SecondScreenState extends State<SecondScreen> {
       home: Scaffold(
         appBar: appBar(),
         body: buttons(context),
-        bottomNavigationBar: underAppBar_Second_Screen(context),
+        bottomNavigationBar: underAppBar(context),
       ),
     );
   }

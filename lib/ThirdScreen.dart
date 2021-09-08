@@ -14,7 +14,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
       home: Scaffold(
         appBar: appBar(),
         body: put_in_buttons(context),
-        bottomNavigationBar: underAppBar_Third_Screen(context),
+        bottomNavigationBar: underAppBar(context),
       ),
     );
   }
