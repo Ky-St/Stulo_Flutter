@@ -13,7 +13,7 @@ class _FourthScreenState extends State<FourthScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: appBar(),
-        body: card_of_events(context),
+        body: card_of_events(),
         bottomNavigationBar: underAppBar(context),
       ),
     );

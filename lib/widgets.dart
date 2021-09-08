@@ -270,56 +270,64 @@ Widget put_in_buttons(BuildContext context){
     ),
   );
 }
-Widget card_of_events(BuildContext context){
-  final GlobalKey<AnimatedListState> key_ = GlobalKey();
-  
-  void remove_of_card(index){
-    final item = events.removeAt(index);
-    print(events.length);
+Widget card_of_events(){
+  String str = "KEINE AUGTRÄGE MEHR!";
+  String str_1 = "AUFTRAG IST GELÖSCHT";
+
+  void showToast(new_string) {
+    Fluttertoast.showToast(
+        msg: new_string,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.white,
+        textColor: Colors.red,
+        fontSize: 20
+    );
   }
   return Container(
     child: ListView.builder(
         itemCount: events.length,
         padding: EdgeInsets.all(5.0),
-        itemBuilder: (_, index) => Card(
-          key: key_,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: mainColor, width: 2),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      "Name: ${events[index].name_employer}\nStunden: ${events[index].number_hours}\nGehalt: ${events[index].salary_hours}\n"
-                      "Verdient: ${events[index].result}",
-                      style: TextStyle(fontSize: 20.0),
-                    ),
+        itemBuilder: (_, index) => Dismissible(
+          key: UniqueKey(),
+          direction: DismissDirection.horizontal,
+          onDismissed: (direction){
+            if(direction == DismissDirection.startToEnd){
+              events.removeAt(index);
+              showToast(str_1);
+              if(events.isEmpty)
+                print("Keine Aufträge mehr");
+                showToast(str);
+            }
+          },
+          background: Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(right: 20.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: mainColor, width: 2),
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
+            child: Icon(Icons.delete, color: Colors.greenAccent),
+          ),
+          child: Container(
+            height: 120,
+            width: 400,
+            child: Card(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: mainColor, width: 2),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                  Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(
-                            Icons.border_color,
-                            color: mainColor,
-                          ),
-                          onPressed: () {}),
+                  child:
                       Padding(
-                        padding: const EdgeInsets.only(left: 297.0),
-                        child: IconButton(
-                            icon: Icon(
-                              Icons.remove_circle_outlined,
-                              color: mainColor,
-                            ),
-                            onPressed: () {
-                              remove_of_card(index);
-                            }),
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "Name: ${events[index].name_employer}\nStunden: ${events[index].number_hours}\nGehalt: ${events[index].salary_hours}\n"
+                          "Verdient: ${events[index].result}",
+                          style: TextStyle(fontSize: 20.0),
+                        ),
                       ),
-                    ],
-                  )
-                ],
-              ),
-            )),
+                ),
+          ),
+        )),
   );
 }
